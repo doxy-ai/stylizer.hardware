@@ -1,13 +1,15 @@
-#include "file.hpp"
+#include "sdl.hpp"
 
 #include <iostream>
 
-void print_from_memory(std::span<std::byte> span) {
-	for(auto c: span)
-		std::cout << (char)c;
-}
-
 int main() {
-	stylizer::load_from_file(print_from_memory, "../test.txt");
-	std::cout << "Hello World" << std::endl;
+	stylizer::sdl.init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
+
+	SDL_Window* window = SDL_CreateWindow("Hello World", 800, 600, 0);
+
+	while(stylizer::sdl.poll_until_or_done(stylizer::target_fps_time(60))) {
+		std::cout << "loop" << std::endl;
+	}
+
+	SDL_DestroyWindow(window);
 }
